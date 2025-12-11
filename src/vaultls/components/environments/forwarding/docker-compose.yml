@@ -1,0 +1,6 @@
+services:
+  vaultls:
+    environment:
+      VAULTLS_URL: ${VAULTLS_URL:-http://localhost}
+    ports:
+      - 80:80

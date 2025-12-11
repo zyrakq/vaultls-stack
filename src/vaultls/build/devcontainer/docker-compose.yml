@@ -1,0 +1,29 @@
+x-logging: &default-logging
+  driver: "json-file"
+  options:
+    max-size: "${LOG_MAX_SIZE:-10m}"
+    max-file: "${LOG_MAX_FILE:-3}"
+    compress: "${LOG_COMPRESS:-true}"
+services:
+  vaultls:
+    image: ${IMAGE:-ghcr.io/7ritn/vaultls:latest}
+    container_name: vaultls
+    restart: unless-stopped
+    volumes:
+      - vaultls-data:/app/data
+    logging: *default-logging
+    environment:
+      VAULTLS_API_SECRET: ${VAULTLS_API_SECRET}
+      VAULTLS_DB_SECRET: ${VAULTLS_DB_SECRET:-}
+      VAULTLS_URL: ${VAULTLS_URL:-http://vaultls}
+    networks:
+      - vaultls-network
+      - vaultls-workspace-network
+volumes:
+  vaultls-data:
+    name: vaultls-data
+networks:
+  vaultls-network:
+    name: vaultls-network
+  vaultls-workspace-network:
+    external: true

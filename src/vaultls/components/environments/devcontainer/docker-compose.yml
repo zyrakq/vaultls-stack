@@ -1,0 +1,10 @@
+services:
+  vaultls:
+    environment:
+      VAULTLS_URL: ${VAULTLS_URL:-http://vaultls}
+    networks:
+      - vaultls-workspace-network
+
+networks:
+  vaultls-workspace-network:
+    external: true
